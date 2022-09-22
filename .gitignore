@@ -1,0 +1,21 @@
+# IDE config
+.vscode
+
+# source files
+*.tar*
+*.tgz
+*.part
+*.zip
+*.rar
+*.7z
+*.pacman
+*.deb
+*.AppImage
+*.jar
+
+# GitHub wiki
+/wiki
+
+# Node.js
+node_modules
+/scripts/long-built/dist
