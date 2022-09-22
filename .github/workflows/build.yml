@@ -124,7 +124,16 @@ jobs:
             gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
           done
 
-      - name: Deploy 🚀
+      - name: Deploy x86-64
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: packages-x86-64
+          target-folder: x86_64
+          repository-name: cheetah-aur/cheetah.db
+      
+      - name: Deploy x86-64-v3
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: packages-x86-64-v3
+          target-folder: x86_64-v3
+          repository-name: cheetah-aur/cheetah.db
