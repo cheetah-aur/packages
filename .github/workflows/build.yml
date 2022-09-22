@@ -95,9 +95,6 @@ jobs:
     if: github.event_name != 'pull_request' && always()
     needs: build
     runs-on: ubuntu-latest
-    container:
-      image: archlinux:latest
-      options: --privileged
 
     steps:
       - name: Clone repository
@@ -105,10 +102,8 @@ jobs:
         with:
           fetch-depth: 1000
 
-      - name: Setup
-        run: |
-          pacman -Syu --noconfirm
-          pacman -S --noconfirm git
+      - name: Install Archlinux
+        run: curl -L https://github.com/zaoqi/github-actions-archlinux/raw/master/install.sh | sh
 
       - name: Download artifact
         uses: actions/download-artifact@v3
