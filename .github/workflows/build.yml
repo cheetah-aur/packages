@@ -96,7 +96,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     container:
-      image: built-aur/packages:latest
+      image: archlinux:latest
       options: --privileged
 
     steps:
