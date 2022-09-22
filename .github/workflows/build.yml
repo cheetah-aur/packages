@@ -124,11 +124,7 @@ jobs:
             gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
           done
 
-      - name: Upload packages
-        if: always() && github.event_name != 'pull_request'
-        env:
-          SFTP_HOST: ${{ secrets.SFTP_HOST }}
-          SFTP_USER: ${{ secrets.SFTP_USER }}
-          SFTP_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
-          SFTP_CWD: ${{ secrets.SFTP_CWD }}
-        run: ./scripts/upload.sh
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: packages-x86-64
