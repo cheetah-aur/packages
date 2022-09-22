@@ -103,7 +103,9 @@ jobs:
           fetch-depth: 1000
 
       - name: Install Archlinux
-        run: curl -L https://github.com/zaoqi/github-actions-archlinux/raw/master/install.sh | sh
+        run: |
+          curl -L https://github.com/zaoqi/github-actions-archlinux/raw/master/install.sh | sh
+          pacman -Syu --noconfirm rsync
 
       - name: Download artifact
         uses: actions/download-artifact@v3
