@@ -23,8 +23,8 @@ jobs:
 
       - name: Setup GIT
         run: |
-          git config --global user.name "MedzikUserBot"
-          git config --global user.email "rm99iv9s@duck.com"
+          git config --global user.name "Cheetah-aur-bot"
+          git config --global user.email "Cheetah-aur@proton.me"
 
       - name: Install python
         run: pacman -Syu --noconfirm python python-setuptools
