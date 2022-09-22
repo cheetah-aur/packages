@@ -4,7 +4,7 @@ SRC_DIR="$(pwd)"
 OUT_DIR="${SRC_DIR}/pkgs"
 HOME_DIR="${SRC_DIR}/home"
 BUILD_DIR="${SRC_DIR}/build"
-DOCKER_IMAGE="ghcr.io/cheetah-aur/packages:latest"
+DOCKER_IMAGE="ghcr.io/built-aur/packages:latest"
 
 mkdir -p \
   "${OUT_DIR}" \
