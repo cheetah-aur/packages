@@ -102,10 +102,10 @@ jobs:
         with:
           fetch-depth: 1000
 
-      - name: Install Archlinux
-        run: |
-          curl -L https://github.com/zaoqi/github-actions-archlinux/raw/master/install.sh | sh
-          pacman -Syu --noconfirm rsync
+      # - name: Install Archlinux
+      #   run: |
+      #     curl -L https://github.com/zaoqi/github-actions-archlinux/raw/master/install.sh | sh
+      #     pacman -Syu --noconfirm rsync
 
       - name: Download artifact
         uses: actions/download-artifact@v3
@@ -129,10 +129,10 @@ jobs:
             gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
           done
 
-      - name: Update Database x86-64
-        if: always() && github.event_name != 'pull_request'
-        run: |
-          repo-add cheetah-aur.db.tar.gz packages-x86-64/*.pkg.tar.xz
+      # - name: Update Database x86-64
+      #   if: always() && github.event_name != 'pull_request'
+      #   run: |
+      #     repo-add cheetah-aur.db.tar.gz packages-x86-64/*.pkg.tar.xz
 
       - name: Deploy x86-64
         uses: JamesIves/github-pages-deploy-action@v4
