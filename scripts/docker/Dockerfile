@@ -3,6 +3,7 @@ FROM medzik/archlinux:latest
 COPY ssh_config /ssh_config
 COPY makepkg.x86-64.conf /etc/makepkg.x86-64.conf
 COPY makepkg.x86-64-v3.conf /etc/makepkg.x86-64-v3.conf
+COPY pacman.conf /etc/pacman.conf
 
 RUN pacman -Syu --noconfirm \
       jq \
