@@ -8,9 +8,8 @@ on:
 
 jobs:
   update-packages:
-    if: github.repository == 'built-aur/packages'
     runs-on: ubuntu-latest
-    container: ghcr.io/built-aur/packages:latest
+    container: ghcr.io/cheetah-aur/packages:latest
 
     steps:
       - name: work around permission issue
@@ -45,9 +44,8 @@ jobs:
           GIT_PUSH_PACKAGES: true
 
   push-aur:
-    if: github.repository == 'built-aur/packages'
     runs-on: ubuntu-latest
-    container: ghcr.io/built-aur/packages:latest
+    container: ghcr.io/cheetah-aur/packages:latest
 
     steps:
       - name: work around permission issue
