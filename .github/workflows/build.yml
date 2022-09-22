@@ -95,6 +95,9 @@ jobs:
     if: github.event_name != 'pull_request' && always()
     needs: build
     runs-on: ubuntu-latest
+    container:
+      image: cheetah-aur/packages:latest
+      options: --privileged
 
     steps:
       - name: Clone repository
