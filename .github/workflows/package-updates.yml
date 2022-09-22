@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.GH_PUSH_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Setup GIT
         run: |
@@ -40,7 +40,7 @@ jobs:
       - name: Auto Update
         run: ./scripts/auto-update.sh
         env:
-          GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_API_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           GIT_COMMIT_PACKAGES: true
           GIT_PUSH_PACKAGES: true
 
@@ -60,5 +60,5 @@ jobs:
         run: ./scripts/push-aur-entrypoint.sh
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          COMMIT_USER: "MedzikUserBot"
-          COMMIT_EMAIL: "rm99iv9s@duck.com"
+          COMMIT_USER: "cheetah-aur-bot"
+          COMMIT_EMAIL: "cheetah-aur-bot@proton.me"

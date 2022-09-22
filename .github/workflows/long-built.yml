@@ -34,7 +34,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Prepare Build
         run: ./scripts/long-built/prepare.sh
@@ -90,7 +90,7 @@ jobs:
         with:
           package: packages-${{ matrix.arch }}
           use-registry: true
-          registry-token: "${{ secrets.GITHUB_TOKEN }}"
+          registry-token: "${{ secrets.ACCESS_TOKEN }}"
           image-tag: "${{ join(needs.*.outputs.image-tag) }}"
           arch: ${{ matrix.arch }}
 
@@ -135,7 +135,7 @@ jobs:
           package: packages-${{ matrix.arch }}
           progress-name: stage-1-${{ matrix.arch }}
           use-registry: true
-          registry-token: "${{ secrets.GITHUB_TOKEN }}"
+          registry-token: "${{ secrets.ACCESS_TOKEN }}"
           image-tag: "${{ join(needs.*.outputs.image-tag) }}"
           arch: ${{ matrix.arch }}
 
@@ -180,7 +180,7 @@ jobs:
           package: packages-${{ matrix.arch }}
           progress-name: stage-2-${{ matrix.arch }}
           use-registry: true
-          registry-token: "${{ secrets.GITHUB_TOKEN }}"
+          registry-token: "${{ secrets.ACCESS_TOKEN }}"
           image-tag: "${{ join(needs.*.outputs.image-tag) }}"
           arch: ${{ matrix.arch }}
 
@@ -225,7 +225,7 @@ jobs:
           package: packages-${{ matrix.arch }}
           progress-name: stage-3-${{ matrix.arch }}
           use-registry: true
-          registry-token: "${{ secrets.GITHUB_TOKEN }}"
+          registry-token: "${{ secrets.ACCESS_TOKEN }}"
           image-tag: "${{ join(needs.*.outputs.image-tag) }}"
           arch: ${{ matrix.arch }}
 
@@ -270,7 +270,7 @@ jobs:
           package: packages-${{ matrix.arch }}
           progress-name: stage-4-${{ matrix.arch }}
           use-registry: true
-          registry-token: "${{ secrets.GITHUB_TOKEN }}"
+          registry-token: "${{ secrets.ACCESS_TOKEN }}"
           image-tag: "${{ join(needs.*.outputs.image-tag) }}"
           arch: ${{ matrix.arch }}
 
@@ -315,7 +315,7 @@ jobs:
           package: packages-${{ matrix.arch }}
           progress-name: stage-5-${{ matrix.arch }}
           use-registry: true
-          registry-token: "${{ secrets.GITHUB_TOKEN }}"
+          registry-token: "${{ secrets.ACCESS_TOKEN }}"
           image-tag: "${{ join(needs.*.outputs.image-tag) }}"
           arch: ${{ matrix.arch }}
 
@@ -360,7 +360,7 @@ jobs:
           package: packages-${{ matrix.arch }}
           progress-name: stage-6-${{ matrix.arch }}
           use-registry: true
-          registry-token: "${{ secrets.GITHUB_TOKEN }}"
+          registry-token: "${{ secrets.ACCESS_TOKEN }}"
           image-tag: "${{ join(needs.*.outputs.image-tag) }}"
           arch: ${{ matrix.arch }}
 
