@@ -124,11 +124,21 @@ jobs:
             gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
           done
 
+      - name: Update Database x86-64
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          repo-add cheetah-aur.db.tar.gz packages-x86-64/*.pkg.tar.xz
+
       - name: Deploy x86-64
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: packages-x86-64
           target-folder: x86_64
+
+      - name: Update Database x86-64-v3
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          repo-add cheetah-aur.db.tar.gz packages-x86-64-v3/*.pkg.tar.xz
       
       - name: Deploy x86-64-v3
         uses: JamesIves/github-pages-deploy-action@v4
