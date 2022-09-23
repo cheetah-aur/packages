@@ -18,6 +18,7 @@ jobs:
           git clone https://cheetah-aur-bot:${{ secrets.ACCESS_TOKEN }}@github.com/cheetah-aur/packages.git --branch=gh-pages 
           cd packages
           git remote set-url origin https://cheetah-aur-bot:${{ secrets.ACCESS_TOKEN }}@github.com/cheetah-aur/packages.git
+          ls -la
 
       - name: Import GPG key
         if: always() && github.event_name != 'pull_request'
