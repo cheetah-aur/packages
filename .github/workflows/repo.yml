@@ -55,7 +55,7 @@ jobs:
         run: |
           repo-add cheetah-aur.db.tar.gz x86_64-v3/*.pkg.tar.xz
       
-       - name: Sign repo
+      - name: Sign repo
         env:
           gpg_key: ${{ secrets.GPG_KEY }}
         run: |
