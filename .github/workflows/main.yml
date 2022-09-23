@@ -42,6 +42,10 @@ jobs:
           do
             gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
           done
+
+      - name: Install git
+        run: |
+          pacman -Syu --noconfirm git
      
       - name: Deploy x86-64
         uses: JamesIves/github-pages-deploy-action@v4
