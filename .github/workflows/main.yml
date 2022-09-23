@@ -1,0 +1,85 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "gh-pages" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+        with:
+          ref: 'gh-pages'
+          fetch-depth: 1000
+
+      - name: Import GPG key
+        if: always() && github.event_name != 'pull_request'
+        uses: crazy-max/ghaction-import-gpg@v4
+        with:
+          gpg_private_key: ${{ secrets.GPG_SECRET }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          
+      - name: Update Database x86-64
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          repo-add cheetah-aur.db.tar.gz x86_64/*.pkg.tar.xz
+
+      - name: Sign repo
+        env:
+          gpg_key: ${{ secrets.GPG_KEY }}
+        run: |
+          for file in ./x86_64/*.db*
+          do
+            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
+          done
+          
+          for file in ./x86_64/*.files*
+          do
+            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
+          done
+     
+      - name: Deploy x86-64
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: x86_64
+          target-folder: x86_64
+
+      - name: Update Database x86-64-v3
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          repo-add cheetah-aur.db.tar.gz x86_64-v3/*.pkg.tar.xz
+      
+      - name: Sign repo
+        env:
+          gpg_key: ${{ secrets.GPG_KEY }}
+        run: |
+          for file in ./x86_64-v3/*.db*
+          do
+            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
+          done
+          
+          for file in ./x86_64-v3/*.files*
+          do
+            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
+          done
+     
+     
+      - name: Deploy x86-64-v3
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: x86_64-v3
+          target-folder: x86_64-v3
