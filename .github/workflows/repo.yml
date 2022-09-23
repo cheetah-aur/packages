@@ -16,7 +16,7 @@ jobs:
       options: --privileged
 
     steps:
-      - name: Setup:
+      - name: Setup
         run: |
           pacman -Syu git --noconfirm
           
