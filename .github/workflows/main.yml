@@ -33,6 +33,7 @@ jobs:
         env:
           gpg_key: ${{ secrets.GPG_KEY }}
         run: |
+          ls -l
           for file in ./x86_64/*.db*
           do
             gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
