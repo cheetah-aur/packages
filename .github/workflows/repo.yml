@@ -1,4 +1,4 @@
-name: Build
+name: Build repo
 
 on:
   push:
@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: archlinux:latest
-      options: --privileged
-
     steps:
       - name: Setup
         run: |
