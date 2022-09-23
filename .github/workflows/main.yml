@@ -46,12 +46,6 @@ jobs:
       - name: Install git
         run: |
           pacman -Syu --noconfirm git
-     
-      - name: Deploy x86-64
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: x86_64
-          target-folder: x86_64
 
       - name: Update Database x86-64-v3
         if: always() && github.event_name != 'pull_request'
@@ -73,8 +67,10 @@ jobs:
           done
      
      
-      - name: Deploy x86-64-v3
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: x86_64-v3
-          target-folder: x86_64-v3
+      - name: Commit 
+        run: |
+          git config --global user.name "Cheetah-aur-bot"
+          git config --global user.email "Cheetah-aur@proton.me"
+          git add .
+          git commit -m "Update repo"
+          git push
