@@ -35,6 +35,7 @@ jobs:
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+          SSH_ASKPASS: "({ secrets.SSH_ASKPASS })"
 
       - name: Auto Update
         run: ./scripts/auto-update.sh
