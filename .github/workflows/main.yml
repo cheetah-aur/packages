@@ -27,13 +27,12 @@ jobs:
       - name: Update Database x86-64
         if: always() && github.event_name != 'pull_request'
         run: |
-          repo-add cheetah-aur.db.tar.gz x86_64/*.pkg.tar.xz
+          repo-add x86_64/cheetah-aur.db.tar.gz x86_64/*.pkg.tar.xz
 
       - name: Sign repo
         env:
           gpg_key: ${{ secrets.GPG_KEY }}
         run: |
-          ls x86_64 -l
           for file in ./x86_64/*.db*
           do
             gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
@@ -53,7 +52,7 @@ jobs:
       - name: Update Database x86-64-v3
         if: always() && github.event_name != 'pull_request'
         run: |
-          repo-add cheetah-aur.db.tar.gz x86_64-v3/*.pkg.tar.xz
+          repo-add x86_64-v3/cheetah-aur.db.tar.gz x86_64-v3/*.pkg.tar.xz
       
       - name: Sign repo
         env:
