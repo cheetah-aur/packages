@@ -69,7 +69,7 @@ jobs:
      
       - name: Commit 
         run: |
-          ls -la
+          ls -la ..
           pwd
           git config --global user.name "Cheetah-aur-bot"
           git config --global user.email "Cheetah-aur@proton.me"
