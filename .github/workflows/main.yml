@@ -46,15 +46,12 @@ jobs:
           do
             gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
           done
-        env:
-          gpg_key: ${{ secrets.GPG_KEY }}
-     
-      - name: Commit 
-        run: |
-          ls -la ..
           pwd
           git config --global user.name "Cheetah-aur-bot"
           git config --global user.email "Cheetah-aur@proton.me"
           git add .
           git commit -m "Update repo"
           git push
+        env:
+          gpg_key: ${{ secrets.GPG_KEY }}
+     
