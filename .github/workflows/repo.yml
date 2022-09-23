@@ -1,0 +1,85 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - gh-pages
+
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+      options: --privileged
+
+    steps:
+      - name: Setup:
+        run: |
+          pacman -Syu git --noconfirm
+          
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          ref: 'gh-pages'
+          fetch-depth: 1000
+
+      - name: Import GPG key
+        if: always() && github.event_name != 'pull_request'
+        uses: crazy-max/ghaction-import-gpg@v4
+        with:
+          gpg_private_key: ${{ secrets.GPG_SECRET }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          
+      - name: Update Database x86-64
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          repo-add cheetah-aur.db.tar.gz x86_64/*.pkg.tar.xz
+
+      - name: Sign repo
+        env:
+          gpg_key: ${{ secrets.GPG_KEY }}
+        run: |
+          for file in ./x86_64/*.db*
+          do
+            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
+          done
+          
+          for file in ./x86_64/*.files*
+          do
+            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
+          done
+     
+      - name: Deploy x86-64
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: x86_64
+          target-folder: x86_64
+
+      - name: Update Database x86-64-v3
+        if: always() && github.event_name != 'pull_request'
+        run: |
+          repo-add cheetah-aur.db.tar.gz x86_64-v3/*.pkg.tar.xz
+      
+       - name: Sign repo
+        env:
+          gpg_key: ${{ secrets.GPG_KEY }}
+        run: |
+          for file in ./x86_64-v3/*.db*
+          do
+            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
+          done
+          
+          for file in ./x86_64-v3/*.files*
+          do
+            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
+          done
+     
+     
+      - name: Deploy x86-64-v3
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: x86_64-v3
+          target-folder: x86_64-v3
