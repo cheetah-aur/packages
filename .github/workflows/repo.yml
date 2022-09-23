@@ -1,16 +1,15 @@
-name: Build repo
+name: Update repo
 
 on:
-  push:
-    branches:
-      - gh-pages
+  schedule:
+    - cron:  '0 */1 * * *'
 
   workflow_dispatch:
 
-
 jobs:
-  build_repo:
+  update-packages:
     runs-on: ubuntu-latest
+    container: ghcr.io/cheetah-aur/packages:latest
 
     steps:
       - name: Clone repository
