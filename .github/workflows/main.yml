@@ -13,7 +13,10 @@ jobs:
       image: archlinux:latest
     steps:
       - uses: actions/checkout@v3
-      - run: | 
+
+      - name: Install git
+        run: |
+          pacman -Syu --noconfirm git
           git checkout gh-pages
 
       - name: Import GPG key
@@ -41,10 +44,6 @@ jobs:
           do
             gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
           done
-
-      - name: Install git
-        run: |
-          pacman -Syu --noconfirm git
 
       - name: Update Database x86-64-v3
         if: always() && github.event_name != 'pull_request'
