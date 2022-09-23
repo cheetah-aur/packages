@@ -12,6 +12,12 @@ jobs:
     container:
       image: archlinux:latest
     steps:
+      - name: Import GPG key
+        if: always() && github.event_name != 'pull_request'
+        uses: crazy-max/ghaction-import-gpg@v4
+        with:
+          gpg_private_key: ${{ secrets.GPG_SECRET }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Install git
         run: |
           pacman -Syu --noconfirm git
@@ -19,18 +25,8 @@ jobs:
           cd packages
           git remote set-url origin https://cheetah-aur-bot:${{ secrets.ACCESS_TOKEN }}@github.com/cheetah-aur/packages.git
           ls -la
-
-      - name: Import GPG key
-        if: always() && github.event_name != 'pull_request'
-        uses: crazy-max/ghaction-import-gpg@v4
-        with:
-          gpg_private_key: ${{ secrets.GPG_SECRET }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
-          
-      - name: Update Database x86-64
-        if: always() && github.event_name != 'pull_request'
-        run: |
           repo-add x86_64/cheetah-aur.db.tar.gz x86_64/*.pkg.tar.xz
+          repo-add x86_64-v3/cheetah-aur.db.tar.gz x86_64-v3/*.pkg.tar.xz
 
       - name: Sign repo
         env:
@@ -46,15 +42,6 @@ jobs:
             gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
           done
 
-      - name: Update Database x86-64-v3
-        if: always() && github.event_name != 'pull_request'
-        run: |
-          repo-add x86_64-v3/cheetah-aur.db.tar.gz x86_64-v3/*.pkg.tar.xz
-      
-      - name: Sign repo
-        env:
-          gpg_key: ${{ secrets.GPG_KEY }}
-        run: |
           for file in ./x86_64-v3/*.db*
           do
             gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
