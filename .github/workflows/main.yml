@@ -27,31 +27,27 @@ jobs:
           ls -la
           repo-add x86_64/cheetah-aur.db.tar.gz x86_64/*.pkg.tar.xz
           repo-add x86_64-v3/cheetah-aur.db.tar.gz x86_64-v3/*.pkg.tar.xz
+          for file in x86_64/*.db*
+          do
+            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
+          done
+          
+          for file in x86_64/*.files*
+          do
+            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
+          done
 
-      - name: Sign repo
+          for file in x86_64-v3/*.db*
+          do
+            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
+          done
+          
+          for file in x86_64-v3/*.files*
+          do
+            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
+          done
         env:
           gpg_key: ${{ secrets.GPG_KEY }}
-        run: |
-          for file in ./x86_64/*.db*
-          do
-            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
-          done
-          
-          for file in ./x86_64/*.files*
-          do
-            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
-          done
-
-          for file in ./x86_64-v3/*.db*
-          do
-            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
-          done
-          
-          for file in ./x86_64-v3/*.files*
-          do
-            gpg --detach-sign --use-agent --default-key "${gpg_key}" --batch --yes "${file}"
-          done
-     
      
       - name: Commit 
         run: |
