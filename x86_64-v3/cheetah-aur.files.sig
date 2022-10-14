@@ -1,1 +1,0 @@
-cheetah-aur.files.tar.gz.sig
